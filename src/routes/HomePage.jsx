@@ -1,42 +1,56 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { format } from "date-fns";
 import TodoHead from "../components/TodoHead";
 import TodoList from "../components/TodoList";
 import TodoCreate from "../components/TodoCreate";
-import TodoDummyData from "../data/dummy.json";
 import CalenderIcon from "../assets/images/calendar.png";
+import { getTodos, toggleTodo, deleteTodo, createTodo } from "../apis";
 
 const HomePage = () => {
   const [todos, setTodos] = useState([]);
 
-  // 할 일 추가
-  const handleCreate = (text) => {
-    const newId =
-      todos.length > 0 ? Math.max(...todos.map((todo) => todo.id)) + 1 : 0;
+  // 할 일 불러오기
+  const fetchTodos = async () => {
+    const todoResponse = await getTodos();
+    setTodos(todoResponse);
+  };
 
-    const newTodo = { id: newId, text, done: false };
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
+  // 할 일 추가
+  const handleCreate = async (text) => {
+    try {
+      const newTodo = await createTodo(text);
+      setTodos([...todos, newTodo]);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   // 할 일 상태 변경 (done 값 토글)
-  const handleToggle = (id) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
+  const handleToggle = async (id) => {
+    try {
+      await toggleTodo(id);
+      const newTodos = todos.map((todo) =>
         todo.id === id ? { ...todo, done: !todo.done } : todo
-      )
-    );
+      );
+      setTodos(newTodos);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   // 할 일 삭제
-  const handleRemove = (id) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  const handleRemove = async (id) => {
+    try {
+      await deleteTodo(id);
+      const newTodos = todos.filter((todo) => todo.id !== id);
+      setTodos(newTodos);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  // 초기 데이터 불러오기
   useEffect(() => {
-    const today = format(new Date(), "yyyy-MM-dd");
-    setTodos(TodoDummyData[today] || []);
+    fetchTodos();
   }, []);
 
   return (
