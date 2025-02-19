@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
+import TodoHead from "../components/TodoHead";
+import TodoDummyData from "../data/dummy.json";
 import CalenderIcon from "../assets/images/calendar.png";
 
 const HomePage = () => {
+  const today = format(new Date(), "yyyy-MM-dd");
+  const todos = TodoDummyData[today] || [];
+
   return (
     <>
-      <h1 className="text-start m-12 mb-8 px-1">Home</h1>
+      <TodoHead todos={todos} />
       <Link to="/history">
         <img
           src={CalenderIcon}
