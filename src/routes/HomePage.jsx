@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import TodoHead from "../components/TodoHead";
+import TodoList from "../components/TodoList";
 import TodoDummyData from "../data/dummy.json";
 import CalenderIcon from "../assets/images/calendar.png";
 
@@ -11,6 +12,7 @@ const HomePage = () => {
   return (
     <>
       <TodoHead todos={todos} />
+      <TodoList todos={todos} />
       <Link to="/history">
         <img
           src={CalenderIcon}
