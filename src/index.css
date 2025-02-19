@@ -24,16 +24,30 @@ a:hover {
   color: #535bf2;
 }
 
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("./fonts/Pretendard-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cafe24Supermagic";
+  src: url("./fonts/Cafe24Supermagic.ttf");
+}
+
 body {
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: #e9ecef;
+  font-family: "Pretendard-Regular";
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 36px;
   line-height: 1.1;
 }
 
@@ -67,4 +81,145 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+  button:focus {
+    outline: none;
+  }
+}
+
+.template-container {
+  width: 512px;
+  height: 768px;
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04);
+  margin: 0 auto;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.head-container {
+  padding-top: 62px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e9ecef;
+  h1 {
+    margin: 0;
+    font-size: 42px;
+    color: #343a40;
+  }
+  .day {
+    margin-top: 8px;
+    color: #868e96;
+    font-size: 18px;
+  }
+  .todos-left {
+    color: #20c997;
+    font-size: 18px;
+    margin-top: 32px;
+    font-weight: bold;
+    font-family: "Cafe24Supermagic";
+  }
+}
+
+.text {
+  flex: 1;
+  font-size: 22px;
+  color: #495057;
+  margin-right: 10px;
+}
+
+.text-done {
+  color: #ced4da;
+  margin-right: 10px;
+}
+
+.remove-icon {
+  margin-right: 25px;
+  color: #dee2e6;
+  font-size: 20px;
+  cursor: pointer;
+  &:hover {
+    color: #ff6b6b;
+  }
+}
+
+.check-circle {
+  width: 29px;
+  height: 29px;
+  border-radius: 15px;
+  border: 1px solid #ced4da;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.circle-done {
+  border: 1px solid #38d9a9;
+  color: #38d9a9;
+}
+
+.insert-form {
+  background: #f8f9fa;
+  padding: 32px;
+  padding-bottom: 72px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  border-top: 1px solid #e9ecef;
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 18px;
+  padding: 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  outline: none;
+}
+
+.circle-button {
+  display: block;
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  transform: translate(-50%, 50%);
+  transition: 0.125s all ease-in;
+  background: #38d9a9;
+  z-index: 5;
+  cursor: pointer;
+
+  &:hover {
+    background: #63e6be;
+  }
+
+  &:active {
+    background: #20c997;
+  }
+}
+
+.button-open {
+  background: #ff6b6b;
+  &:hover {
+    background: #ff8787;
+  }
+  &:active {
+    background: #fa5252;
+  }
+  transform: translate(-50%, 50%) rotate(45deg);
 }
