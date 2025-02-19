@@ -19,6 +19,20 @@ const HomePage = () => {
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
 
+  // 할 일 상태 변경 (done 값 토글)
+  const handleToggle = (id) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, done: !todo.done } : todo
+      )
+    );
+  };
+
+  // 할 일 삭제
+  const handleRemove = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  };
+
   // 초기 데이터 불러오기
   useEffect(() => {
     const today = format(new Date(), "yyyy-MM-dd");
@@ -28,7 +42,7 @@ const HomePage = () => {
   return (
     <>
       <TodoHead todos={todos} />
-      <TodoList todos={todos} />
+      <TodoList todos={todos} onToggle={handleToggle} onRemove={handleRemove} />
       <TodoCreate onCreate={handleCreate} />
       <Link to="/history">
         <img
