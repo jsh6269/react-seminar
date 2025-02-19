@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
+import DayModal from "../components/DayModal";
 import CheckListIcon from "../assets/images/checklist.png";
+
 import {
   format,
   startOfMonth,
@@ -11,9 +13,12 @@ import {
   isSameMonth,
   isSameDay,
 } from "date-fns";
+import { useState } from "react";
 
 const HistoryPage = () => {
-  const currentDate = new Date();
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
+
   const startDate = startOfWeek(startOfMonth(currentDate));
   const endDate = endOfWeek(endOfMonth(currentDate));
 
@@ -23,17 +28,16 @@ const HistoryPage = () => {
     add(startDate, { days: i })
   );
 
-  const handlePrevMonth = () => {
-    alert("previous month");
-  };
-  const handleNextMonth = () => {
-    alert("next month");
-  };
+  const handlePrevMonth = () => setCurrentDate(sub(currentDate, { months: 1 }));
+  const handleNextMonth = () => setCurrentDate(add(currentDate, { months: 1 }));
 
   const handleDayClick = (date) => {
-    alert(format(date, "dd MMMM yyyy"));
+    setSelectedDate(date);
   };
 
+  const closeModal = () => {
+    setSelectedDate(null);
+  };
   return (
     <>
       <h1 className="text-start m-12 mb-8 px-1">History</h1>
@@ -72,6 +76,10 @@ const HistoryPage = () => {
           ))}
         </div>
       </div>
+
+      {selectedDate && (
+        <DayModal selectedDate={selectedDate} closeModal={closeModal} />
+      )}
 
       <Link to="/">
         <img
