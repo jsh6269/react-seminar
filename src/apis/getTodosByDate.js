@@ -5,7 +5,7 @@ export const getTodosByDate = async (date) => {
     const getTodosByDateResponse = await instance.get(
       `/api/todos/date/${date}`
     );
-    return getTodosByDateResponse.data.todos;
+    return getTodosByDateResponse.data;
   } catch (e) {
     throw new Error("날짜별 Todo Data 통신 Error", e);
   }

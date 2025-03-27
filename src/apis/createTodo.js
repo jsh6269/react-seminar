@@ -7,7 +7,7 @@ export const createTodo = async (text) => {
       "/api/todos/create",
       newTodo
     );
-    return createTodoResponse.data.todo;
+    return createTodoResponse.data;
   } catch (e) {
     throw new Error("Todo 생성 에러", e);
   }
