@@ -16,14 +16,16 @@ import {
 import { useState } from "react";
 
 const HistoryPage = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const startDate = startOfWeek(startOfMonth(currentDate));
   const endDate = endOfWeek(endOfMonth(currentDate));
 
   // 하루 = 1000 * 60 * 60 * 24 밀리초
-  const dayCount = (endDate - startDate) / (1000 * 60 * 60 * 24) + 1;
+  const dayCount =
+    (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24) + 1;
+
   const days = Array.from({ length: dayCount }, (_, i) =>
     add(startDate, { days: i })
   );
@@ -31,7 +33,7 @@ const HistoryPage = () => {
   const handlePrevMonth = () => setCurrentDate(sub(currentDate, { months: 1 }));
   const handleNextMonth = () => setCurrentDate(add(currentDate, { months: 1 }));
 
-  const handleDayClick = (date) => {
+  const handleDayClick = (date: Date) => {
     setSelectedDate(date);
   };
 

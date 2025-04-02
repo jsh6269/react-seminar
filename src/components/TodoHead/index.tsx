@@ -1,4 +1,10 @@
-const TodoHead = ({ todos }) => {
+import { Todo } from "../../types/todo";
+
+export interface TodoHeadProps {
+  todos: Todo[];
+}
+
+const TodoHead: React.FC<TodoHeadProps> = ({ todos }) => {
   const undoneCount = todos.filter((todo) => !todo.done).length;
   const today = new Date();
   const dateString = today.toLocaleDateString("ko-KR", {

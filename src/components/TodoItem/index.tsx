@@ -1,6 +1,18 @@
 import { useState } from "react";
 
-const TodoItem = ({ text, done, onToggle, onRemove }) => {
+interface TodoItemProps {
+  text: string;
+  done: boolean;
+  onToggle: () => void;
+  onRemove: () => void;
+}
+
+const TodoItem: React.FC<TodoItemProps> = ({
+  text,
+  done,
+  onToggle,
+  onRemove,
+}) => {
   const [isRemoveIconVisible, setIsRemoveIconVisible] = useState(false);
 
   const handleMouseOver = () => setIsRemoveIconVisible(true);

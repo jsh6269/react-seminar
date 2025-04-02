@@ -5,9 +5,10 @@ import TodoList from "../components/TodoList";
 import TodoCreate from "../components/TodoCreate";
 import CalenderIcon from "../assets/images/calendar.png";
 import { getTodos, toggleTodo, deleteTodo, createTodo } from "../apis";
+import { Todo } from "../types/todo";
 
 const HomePage = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   // 할 일 불러오기
   const fetchTodos = async () => {
@@ -16,7 +17,7 @@ const HomePage = () => {
   };
 
   // 할 일 추가
-  const handleCreate = async (text) => {
+  const handleCreate = async (text: string) => {
     try {
       const newTodo = await createTodo(text);
       setTodos([...todos, newTodo]);
@@ -26,7 +27,7 @@ const HomePage = () => {
   };
 
   // 할 일 상태 변경 (done 값 토글)
-  const handleToggle = async (id) => {
+  const handleToggle = async (id: number) => {
     try {
       await toggleTodo(id);
       const newTodos = todos.map((todo) =>
@@ -39,7 +40,7 @@ const HomePage = () => {
   };
 
   // 할 일 삭제
-  const handleRemove = async (id) => {
+  const handleRemove = async (id: number) => {
     try {
       await deleteTodo(id);
       const newTodos = todos.filter((todo) => todo.id !== id);

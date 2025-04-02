@@ -5,6 +5,8 @@ export const getTodos = async () => {
     const apiResponse = await instance.get("/api/todos");
     return apiResponse.data;
   } catch (e) {
-    throw new Error("Todo 목록 불러오기 error", e);
+    throw new Error(
+      "Todo 목록 불러오기 error" + (e instanceof Error ? e.message : "")
+    );
   }
 };

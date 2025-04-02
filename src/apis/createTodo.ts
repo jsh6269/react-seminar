@@ -1,6 +1,6 @@
 import { instance } from "../axios";
 
-export const createTodo = async (text) => {
+export const createTodo = async (text: string) => {
   try {
     const newTodo = { text };
     const createTodoResponse = await instance.post(
@@ -9,6 +9,6 @@ export const createTodo = async (text) => {
     );
     return createTodoResponse.data;
   } catch (e) {
-    throw new Error("Todo 생성 에러", e);
+    throw new Error("Todo 생성 에러: " + (e instanceof Error ? e.message : ""));
   }
 };

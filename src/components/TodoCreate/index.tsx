@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import plus from "../../assets/images/plus.png";
 
-const TodoCreate = ({ onCreate }) => {
+interface TodoCreateProps {
+  onCreate: (text: string) => void;
+}
+
+const TodoCreate: React.FC<TodoCreateProps> = ({ onCreate }) => {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
 
-  const handleTextInputChange = (e) => {
+  const handleTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (text.trim()) {
       onCreate(text);

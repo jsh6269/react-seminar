@@ -2,29 +2,30 @@ import { format } from "date-fns";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getTodosByDate } from "../../apis";
+import { Todo } from "../../types/todo";
 
 const DATE_FORMAT_FORM = "yyyy-MM-dd";
 
-const DayModal = ({ selectedDate, closeModal }) => {
-  const [todos, setTodos] = useState([]);
-  const [formattedDate, setFormattedDate] = useState(
-    format(selectedDate, DATE_FORMAT_FORM)
-  );
-  const formatSelectedDate = (date) => format(date, DATE_FORMAT_FORM);
+interface DayModalProps {
+  selectedDate: Date;
+  closeModal: () => void;
+}
 
-  const getTodosBySelectedDate = async (selectedDate) => {
+const DayModal: React.FC<DayModalProps> = ({ selectedDate, closeModal }) => {
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const fetchTodos = async (date: string) => {
     try {
-      const getTodosByDateResponse = await getTodosByDate(selectedDate);
-      setTodos(getTodosByDateResponse);
+      const todosByDate = await getTodosByDate(date);
+      setTodos(todosByDate);
     } catch (e) {
       console.error(e);
     }
   };
 
   useEffect(() => {
-    const formatted = formatSelectedDate(selectedDate);
-    setFormattedDate(formatted);
-    getTodosBySelectedDate(formatted);
+    const formattedDate = format(selectedDate, DATE_FORMAT_FORM);
+    fetchTodos(formattedDate);
   }, [selectedDate]);
 
   return (
@@ -37,7 +38,9 @@ const DayModal = ({ selectedDate, closeModal }) => {
           className="bg-white p-6 rounded-lg shadow-lg w-80"
           onClick={(e) => e.stopPropagation()}
         >
-          <h2 className="text-lg font-semibold mb-8">{formattedDate}</h2>
+          <h2 className="text-lg font-semibold mb-8">
+            {format(selectedDate, DATE_FORMAT_FORM)}
+          </h2>
           {todos.length > 0 ? (
             <ul>
               {todos.map(({ id, text, done }) => (
